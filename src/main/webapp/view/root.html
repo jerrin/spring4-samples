@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <title>Samples</title>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+        <script type="text/javascript">
+            var Spring4Samples = {};
+
+            (function(){
+
+                // Create a singleton object that defines the remote service.
+                var remoteService = {
+                      remotePath: '/refresh',
+                      getData: function(){
+                        $.ajax({
+                            'url': this.remotePath,
+                            'type': 'GET',
+                            'headers': {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            'dataType': 'json',
+                            'success': function(data){
+                                console.log(data);
+                                $('#dataList').append(data + '<br/>')
+                            }
+                        });
+                      }
+                };
+
+
+                // Service class; The above approach is the best in this case as we have no state in this class
+                function RemoteService(){
+                    this.remotePath = '/refresh';
+                }
+                RemoteService.prototype.getData = function(){
+                    $.ajax({
+                        'url': this.remotePath,
+                        'type': 'GET',
+                        'headers': {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        'dataType': 'json',
+                        'success': function(data){
+                            console.log(data);
+                            $('#dataList').append(data + '<br/>')
+                        }
+                    });
+                }
+
+                //Create an instance of RemoteService and save it in the namespace
+                //Spring4Samples.service = new RemoteService();
+                //Save the remoteService instance in the namespace
+                Spring4Samples.service = remoteService;
+            })();
+
+
+
+            $(document).ready(function(){
+                $('#refreshData').click(function(ev) {
+                    Spring4Samples.service.getData();
+                    ev.preventDefault();
+                });
+            });
+
+        </script>
+    </head>
+    <body>
+        <div>Samples</div>
+        <div><a href="#" id="refreshData">Get Data</a></div>
+        <div id="dataList"></div>
+    </body>
+</html>

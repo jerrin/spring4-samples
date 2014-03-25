@@ -1,0 +1,24 @@
+# intellij folders #
+
+target/
+target/*
+.idea/
+.idea/*
+
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+build/
+build/*
+
+.gradle/
+.gradle/*
+gradle/
+gradle/*
+
+out/
+out/*
