@@ -15,7 +15,7 @@ public class MyMonad<T> {
     }
 
     public<U> MyMonad<U> map(Function<T, ? extends U> f) {
-        return new MyMonad(f.apply(get()));
+        return new MyMonad(f.apply(doSomething(get())));
     }
 
     public<S> MyMonad<S> flatMap(Function<T, MyMonad<S>> f) {
@@ -24,5 +24,10 @@ public class MyMonad<T> {
 
     private<V> MyMonad<V> flatten(MyMonad<MyMonad<V>> input){
         return input.get();
+    }
+
+    private T doSomething(T t){
+        System.out.println(String.format("Hello %s", t.toString()));
+        return t;
     }
 }
